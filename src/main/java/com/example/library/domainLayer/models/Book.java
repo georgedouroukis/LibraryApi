@@ -13,6 +13,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
+
 @Entity(name="book")
 public class Book {
 
@@ -50,6 +51,95 @@ public class Book {
 		joinColumns = @JoinColumn(name="author_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name="book_id", referencedColumnName = "id"))
 	private List<Author> authors = new ArrayList<Author>();
+
+
+
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", isbn=" + isbn + ", title=" + title + ", pageNumber=" + pageNumber
+				+ ", publicationDate=" + publicationDate + ", publisher=" + publisher + ", genres=" + genres
+				+ ", authors=" + authors + "]";
+	}
+	
+	
+	public String getTitle() {
+		return title;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+
+	public int getPageNumber() {
+		return pageNumber;
+	}
+
+
+	public void setPageNumber(int pageNumber) {
+		this.pageNumber = pageNumber;
+	}
+
+
+	public String getPublicationDate() {
+		return publicationDate;
+	}
+
+
+	public void setPublicationDate(String publicationDate) {
+		this.publicationDate = publicationDate;
+	}
+
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+
+	public void setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+	}
+
+
+	public List<Genre> getGenres() {
+		return genres;
+	}
+
+
+	public void setGenres(List<Genre> genres) {
+		this.genres = genres;
+	}
+
+
+	public List<Author> getAuthors() {
+		return authors;
+	}
+
+
+	public void setAuthors(List<Author> authors) {
+		this.authors = authors;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	
 	
 	
