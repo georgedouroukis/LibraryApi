@@ -3,8 +3,11 @@ package com.example.library.domainLayer.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.transaction.Transactional;
 
 
 @Entity(name="book")
@@ -37,7 +41,8 @@ public class Book {
 	private Publisher publisher;
 	
 	
-	@ManyToMany
+	@JsonManagedReference
+	@ManyToMany /* (fetch = FetchType.EAGER) */
 	@JoinTable(
 		name="book_genres",
 		joinColumns = @JoinColumn(name="genre_id", referencedColumnName = "id"),
@@ -45,7 +50,8 @@ public class Book {
 	private List<Genre> genres = new ArrayList<Genre>();
 	
 	
-	@ManyToMany
+	@JsonManagedReference
+	@ManyToMany /* (fetch = FetchType.EAGER) */
 	@JoinTable(
 		name="book_authors",
 		joinColumns = @JoinColumn(name="author_id", referencedColumnName = "id"),
@@ -53,14 +59,6 @@ public class Book {
 	private List<Author> authors = new ArrayList<Author>();
 
 
-
-	@Override
-	public String toString() {
-		return "Book [id=" + id + ", isbn=" + isbn + ", title=" + title + ", pageNumber=" + pageNumber
-				+ ", publicationDate=" + publicationDate + ", publisher=" + publisher + ", genres=" + genres
-				+ ", authors=" + authors + "]";
-	}
-	
 	
 	public String getTitle() {
 		return title;

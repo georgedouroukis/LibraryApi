@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-
+import jakarta.transaction.Transactional;
 
 @Entity(name="publisher")
 public class Publisher {
@@ -26,11 +26,6 @@ public class Publisher {
 	@OneToMany(mappedBy="publisher")
 	private List<Book> books = new ArrayList<Book>();
 
-	@Override
-	public String toString() {
-		return "Publisher [id=" + id + ", name=" + name + ", phone=" + phone + ", email=" + email + ", books=" + books
-				+ "]";
-	}
 
 	public int getId() {
 		return id;
