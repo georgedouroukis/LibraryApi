@@ -45,8 +45,8 @@ public class Book {
 	@ManyToMany /* (fetch = FetchType.EAGER) */
 	@JoinTable(
 		name="book_genres",
-		joinColumns = @JoinColumn(name="genre_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name="book_id", referencedColumnName = "id"))
+		joinColumns = @JoinColumn(name="book_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name="genre_id", referencedColumnName = "id"))
 	private List<Genre> genres = new ArrayList<Genre>();
 	
 	
@@ -54,8 +54,8 @@ public class Book {
 	@ManyToMany /* (fetch = FetchType.EAGER) */
 	@JoinTable(
 		name="book_authors",
-		joinColumns = @JoinColumn(name="author_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name="book_id", referencedColumnName = "id"))
+		joinColumns = @JoinColumn(name="book_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name="author_id", referencedColumnName = "id"))
 	private List<Author> authors = new ArrayList<Author>();
 
 
