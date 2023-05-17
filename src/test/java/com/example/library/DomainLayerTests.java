@@ -2,18 +2,16 @@ package com.example.library;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.library.domainLayer.models.Author;
-import com.example.library.domainLayer.models.Book;
-import com.example.library.domainLayer.models.Genre;
-import com.example.library.domainLayer.models.Publisher;
-import com.example.library.domainLayer.repositories.AuthorManualRepository;
 import com.example.library.domainLayer.repositories.AuthorRepository;
 import com.example.library.domainLayer.repositories.BookRepository;
 import com.example.library.domainLayer.repositories.GenreRepository;
@@ -34,12 +32,11 @@ class DomainLayerTests {
 	
 	@Autowired
 	private AuthorRepository authorRepo;
-	
-	@Autowired
-	private AuthorManualRepository am;
+
 	
 	@Test
 	@Transactional
+	@Commit
 	void contextLoads() {
 		
 		
@@ -51,12 +48,13 @@ class DomainLayerTests {
 		
 //		books.forEach(b->b.getAuthors().forEach(a->System.out.println(a.getLastName())));
 		
-//		
+
 		Author author = new Author(); 
 			
 			author.setFirstName("George");
 			author.setLastName("Douroukis");
-			author.setMiddleName("R");
+			author.setMiddleName("wwewe");
+			author.setId(61);
 			
 		
 //		Publisher publisher = new Publisher() {{
@@ -78,21 +76,19 @@ class DomainLayerTests {
 //			setPublisher(publisher);
 //		}};
 		
-		
-		am.create(author);
-		
-		
+//			List<Author> list = new ArrayList<>();
+//			
+//			authorRepo.findAll().forEach(a->System.out.println(a.getLastName()));
+			
+		authorRepo.save(author);
 //		publisherRepo.save(publisher);
 //		genreRepo.save(genre);
 //		bookRepo.save(book);
 //		
 		
-		
-		
+	
 		Assertions.assertThat(true).isEqualTo(true);
-		
-		
-		
+
 		
 	}
 

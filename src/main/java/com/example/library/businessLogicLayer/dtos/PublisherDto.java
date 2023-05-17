@@ -1,33 +1,19 @@
-package com.example.library.domainLayer.models;
+package com.example.library.businessLogicLayer.dtos;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.transaction.Transactional;
 
-@Entity(name="publisher")
-public class Publisher {
+public class PublisherDto {
 	
-	@Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
 	private int id;
-	
 	private String name;
-	
 	private String phone;
-	
 	private String email;
-	
-	
-	@OneToMany(mappedBy="publisher")
-	private List<Book> books = new ArrayList<Book>();
 
+	private List<BookDto> books = new ArrayList<BookDto>();
 
+	
 	public int getId() {
 		return id;
 	}
@@ -60,12 +46,13 @@ public class Publisher {
 		this.email = email;
 	}
 
-	public List<Book> getBooks() {
+	public List<BookDto> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<Book> books) {
+	public void setBooks(List<BookDto> books) {
 		this.books = books;
 	}
-
+	
+	
 }

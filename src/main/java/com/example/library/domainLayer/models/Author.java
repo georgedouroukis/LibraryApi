@@ -31,9 +31,9 @@ public class Author {
 	@Column(name = "middle_name")
 	private String middleName;
 	
-	@JsonBackReference
+	
 	@ManyToMany(mappedBy = "authors"/* , fetch = FetchType.EAGER */)
-	List<Book> books = new ArrayList<Book>();
+	private List<Book> books = new ArrayList<Book>();
 
 
 
