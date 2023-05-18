@@ -11,9 +11,19 @@ public class PublisherDto {
 	private String phone;
 	private String email;
 
-	private List<BookDto> books = new ArrayList<BookDto>();
+	private List<Integer> books = new ArrayList<Integer>();
 
 	
+	
+	public PublisherDto(int id, String name, String phone, String email, List<Integer> books) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.books = books;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -46,13 +56,11 @@ public class PublisherDto {
 		this.email = email;
 	}
 
-	public List<BookDto> getBooks() {
+	public List<Integer> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<BookDto> books) {
-		this.books = books;
-	}
+	
 	
 	
 }

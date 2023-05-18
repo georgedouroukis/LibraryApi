@@ -11,11 +11,23 @@ public class BookDto {
 	private int pageNumber;
 	private String publicationDate;
 	
-	private PublisherDto publisher;
-	private List<GenreDto> genres = new ArrayList<GenreDto>();
-	private List<AuthorDto> authors = new ArrayList<AuthorDto>();
+	private Integer publisher;
+	private List<Integer> genres = new ArrayList<Integer>();
+	private List<Integer> authors = new ArrayList<Integer>();
 	
 	
+	public BookDto(int id, String isbn, String title, int pageNumber, String publicationDate, Integer publisher,
+			List<Integer> genres, List<Integer> authors) {
+		super();
+		this.id = id;
+		this.isbn = isbn;
+		this.title = title;
+		this.pageNumber = pageNumber;
+		this.publicationDate = publicationDate;
+		this.publisher = publisher;
+		this.genres = genres;
+		this.authors = authors;
+	}
 	public int getId() {
 		return id;
 	}
@@ -46,23 +58,15 @@ public class BookDto {
 	public void setPublicationDate(String publicationDate) {
 		this.publicationDate = publicationDate;
 	}
-	public PublisherDto getPublisher() {
+	public Integer getPublisher() {
 		return publisher;
 	}
-	public void setPublisher(PublisherDto publisher) {
-		this.publisher = publisher;
-	}
-	public List<GenreDto> getGenres() {
+	public List<Integer> getGenres() {
 		return genres;
 	}
-	public void setGenres(List<GenreDto> genres) {
-		this.genres = genres;
-	}
-	public List<AuthorDto> getAuthors() {
+	public List<Integer> getAuthors() {
 		return authors;
 	}
-	public void setAuthors(List<AuthorDto> authors) {
-		this.authors = authors;
-	}
+	
 
 }

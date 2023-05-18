@@ -10,8 +10,17 @@ public class AuthorDto {
 	private String lastName;
 	private String middleName;
 	
-	private List<BookDto> books = new ArrayList<BookDto>();
+	private List<Integer> books = new ArrayList<>();
 	
+	
+	public AuthorDto(int id, String firstName, String lastName, String middleName, List<Integer> books) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+		this.books = books;
+	}
 	public int getId() {
 		return id;
 	}
@@ -36,10 +45,8 @@ public class AuthorDto {
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
-	public List<BookDto> getBooks() {
+	public List<Integer> getBooks() {
 		return books;
 	}
-	public void setBooks(List<BookDto> books) {
-		this.books = books;
-	}
+	
 }

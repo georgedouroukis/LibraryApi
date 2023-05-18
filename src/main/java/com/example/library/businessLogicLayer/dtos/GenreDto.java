@@ -8,11 +8,19 @@ public class GenreDto {
 	private int id;
 	private String genre;
 	
-	private GenreDto parentGenre;
-	private List<GenreDto> subGenres = new ArrayList<GenreDto>();
-	private List<BookDto> books = new ArrayList<BookDto>();
+	private Integer parentGenre;
+	private List<Integer> subGenres = new ArrayList<Integer>();
+	private List<Integer> books = new ArrayList<Integer>();
 	
 	
+	public GenreDto(int id, String genre, Integer parentGenre, List<Integer> subGenres, List<Integer> books) {
+		super();
+		this.id = id;
+		this.genre = genre;
+		this.parentGenre = parentGenre;
+		this.subGenres = subGenres;
+		this.books = books;
+	}
 	public int getId() {
 		return id;
 	}
@@ -25,23 +33,15 @@ public class GenreDto {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	public GenreDto getParentGenre() {
+	public Integer getParentGenre() {
 		return parentGenre;
 	}
-	public void setParentGenre(GenreDto parentGenre) {
-		this.parentGenre = parentGenre;
-	}
-	public List<GenreDto> getSubGenres() {
+	public List<Integer> getSubGenres() {
 		return subGenres;
 	}
-	public void setSubGenres(List<GenreDto> subGenres) {
-		this.subGenres = subGenres;
-	}
-	public List<BookDto> getBooks() {
+	public List<Integer> getBooks() {
 		return books;
 	}
-	public void setBooks(List<BookDto> books) {
-		this.books = books;
-	}
+	
 	
 }
