@@ -58,6 +58,7 @@ public class AuthorService {
 		
 	}
 	
+	//mapped also by BookService
 	public void addBook(int authorId, int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
@@ -65,6 +66,7 @@ public class AuthorService {
 		authorRepo.save(author);
 	}
 	
+	//mapped also by BookService
 	public void removeBook(int authorId, int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();

@@ -73,8 +73,10 @@ public class BookService {
 	
 	/* addGenre, removeGenre, getGenres,
 	 * addAuthor, removeAuthor, getAuthors,
-	 * addOrReplacePublisher, removePublisher, getPublisher*/
+	 * addOrReplacePublisher, removePublisher, getPublisher
+	 * */
 	
+	//mapped also by GenreService
 	public void addGenre(int bookId, int genreId) {
 		Book book = bookRepo.findById(bookId).get();
 		Genre genre = genreRepo.findById(genreId).get();
@@ -82,6 +84,7 @@ public class BookService {
 		bookRepo.save(book);
 	}
 	
+	//mapped also by GenreService
 	public void removeGenre(int bookId, int genreId) {
 		Book book = bookRepo.findById(bookId).get();
 		Genre genre = genreRepo.findById(genreId).get();
@@ -96,6 +99,7 @@ public class BookService {
 		return genresdtos;
 	}
 	
+	//mapped also by AuthorService
 	public void addAuthor(int bookId, int authorId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
@@ -103,6 +107,7 @@ public class BookService {
 		bookRepo.save(book);
 	}
 	
+	//mapped also by AuthorService
 	public void removeAuthor(int bookId, int authorId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
