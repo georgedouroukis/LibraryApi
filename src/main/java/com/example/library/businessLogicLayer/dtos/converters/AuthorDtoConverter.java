@@ -18,4 +18,14 @@ public class AuthorDtoConverter {
 		
 		
 	}
+	
+	public static Author toEntity(AuthorDto dto) {
+
+		Author author = new Author();
+		author.setFirstName(dto.getFirstName());
+		author.setLastName(dto.getLastName());
+		author.setMiddleName(dto.getMiddleName());
+		
+		return author;
+	}
 }
