@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.library.businessLogicLayer.dtos.AuthorDto;
 import com.example.library.businessLogicLayer.dtos.BookDto;
 import com.example.library.businessLogicLayer.dtos.converters.AuthorDtoConverter;
+import com.example.library.businessLogicLayer.dtos.converters.BookDtoConverter;
 import com.example.library.domainLayer.models.Author;
 import com.example.library.domainLayer.models.Book;
 import com.example.library.domainLayer.repositories.AuthorRepository;
@@ -35,7 +36,8 @@ public class AuthorService {
 	}
 	
 	public AuthorDto getAuthorById(int id) {
-		AuthorDto author = AuthorDtoConverter.toDto(authorRepo.findById(id).get()) ;
+		AuthorDto author = AuthorDtoConverter.toDto(
+				authorRepo.findById(id).get()) ;
 		return author;
 	}
 	
@@ -61,8 +63,6 @@ public class AuthorService {
 		Author author = authorRepo.findById(authorId).get();
 		author.getBooks().add(book);
 		authorRepo.save(author);
-		
-		
 	}
 	
 	public void removeBook(int authorId, int bookId) {
@@ -72,14 +72,16 @@ public class AuthorService {
 		authorRepo.save(author);
 	}
 	
+	public List<BookDto> getBooks(int id){
+		Author author = authorRepo.findById(id).get();
+		List<Book> books = author.getBooks();
+		List<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toList());
+		return booksdtos;
+	}
+
 	public void deleteAuthor(int id) {
 		Author author = authorRepo.findById(id).get();
 		authorRepo.delete(author);
-	}
-	
-	public List<BookDto> getBooks(int id){
-		Author author = authorRepo.findById(id).get();
-		return null;
 	}
 
 }
