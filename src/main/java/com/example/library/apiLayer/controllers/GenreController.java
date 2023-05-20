@@ -14,21 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.library.apiLayer.models.ResponseContainer;
-import com.example.library.businessLogicLayer.dtos.AuthorDto;
-import com.example.library.businessLogicLayer.services.AuthorService;
-
+import com.example.library.businessLogicLayer.dtos.GenreDto;
+import com.example.library.businessLogicLayer.services.GenreService;
 
 @RestController
-@RequestMapping("/authors")
-public class AuthorController {
+@RequestMapping("/genres")
+public class GenreController {
 
 	@Autowired
-	private AuthorService authorService;
+	private GenreService genreService;
 	
 	@GetMapping("/get")
-	public ResponseEntity<ResponseContainer<?>> getAuthors(){
+	public ResponseEntity<ResponseContainer<?>> getGenres(){
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.getAuthors();}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=genreService.getGenres();}},HttpStatus.OK);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.INTERNAL_SERVER_ERROR);
@@ -36,9 +35,9 @@ public class AuthorController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<ResponseContainer<?>> getAuthorById(@PathVariable("id") Integer id) {
+	public ResponseEntity<ResponseContainer<?>> getGenreById(@PathVariable("id") Integer id) {
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.getAuthorById(id);}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=genreService.getGenreById(id);}},HttpStatus.OK);
 		} 
 		catch (NoSuchElementException e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.NOT_FOUND);
@@ -50,10 +49,10 @@ public class AuthorController {
 	
 	
 	@PostMapping("/save")
-	public ResponseEntity<ResponseContainer<?>> createAuthor(@RequestBody AuthorDto dto) {
+	public ResponseEntity<ResponseContainer<?>> createGenre(@RequestBody GenreDto dto) {
 
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.createAuthor(dto);}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=genreService.createGenre(dto);}},HttpStatus.OK);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,10 +60,10 @@ public class AuthorController {
 	}
 	
 	@PutMapping("/save")
-	public ResponseEntity<ResponseContainer<?>> updateAuthor(@RequestBody AuthorDto dto) {
+	public ResponseEntity<ResponseContainer<?>> updateGenre(@RequestBody GenreDto dto) {
 
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.updateAuthor(dto);}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=genreService.updateGenre(dto);}},HttpStatus.OK);
 		}
 		catch (NoSuchElementException e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.NOT_FOUND);

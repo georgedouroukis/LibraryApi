@@ -14,21 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.library.apiLayer.models.ResponseContainer;
-import com.example.library.businessLogicLayer.dtos.AuthorDto;
-import com.example.library.businessLogicLayer.services.AuthorService;
-
+import com.example.library.businessLogicLayer.dtos.BookDto;
+import com.example.library.businessLogicLayer.services.BookService;
 
 @RestController
-@RequestMapping("/authors")
-public class AuthorController {
+@RequestMapping("/books")
+public class BookController {
 
 	@Autowired
-	private AuthorService authorService;
+	private BookService bookService;
 	
 	@GetMapping("/get")
-	public ResponseEntity<ResponseContainer<?>> getAuthors(){
+	public ResponseEntity<ResponseContainer<?>> getBooks(){
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.getAuthors();}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=bookService.getBooks();}},HttpStatus.OK);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.INTERNAL_SERVER_ERROR);
@@ -36,9 +35,9 @@ public class AuthorController {
 	}
 	
 	@GetMapping("/get/{id}")
-	public ResponseEntity<ResponseContainer<?>> getAuthorById(@PathVariable("id") Integer id) {
+	public ResponseEntity<ResponseContainer<?>> getBookById(@PathVariable("id") Integer id) {
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.getAuthorById(id);}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=bookService.getBookById(id);}},HttpStatus.OK);
 		} 
 		catch (NoSuchElementException e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.NOT_FOUND);
@@ -50,10 +49,10 @@ public class AuthorController {
 	
 	
 	@PostMapping("/save")
-	public ResponseEntity<ResponseContainer<?>> createAuthor(@RequestBody AuthorDto dto) {
+	public ResponseEntity<ResponseContainer<?>> createBook(@RequestBody BookDto dto) {
 
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.createAuthor(dto);}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=bookService.createBook(dto);}},HttpStatus.OK);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,10 +60,10 @@ public class AuthorController {
 	}
 	
 	@PutMapping("/save")
-	public ResponseEntity<ResponseContainer<?>> updateAuthor(@RequestBody AuthorDto dto) {
+	public ResponseEntity<ResponseContainer<?>> updateBook(@RequestBody BookDto dto) {
 
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=authorService.updateAuthor(dto);}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=bookService.updateBook(dto);}},HttpStatus.OK);
 		}
 		catch (NoSuchElementException e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.NOT_FOUND);
