@@ -1,6 +1,6 @@
 package com.example.library.businessLogicLayer.services;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,11 @@ public class GenreService {
 	private GenreRepository genreRepo;
 	
 	
-	public List<GenreDto> getGenres(){
+	public Collection<GenreDto> getGenres(){
 		 return genreRepo.findAll()
 				.stream()
 				.map(g->GenreDtoConverter.toDto(g))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
 	
 	public GenreDto getGenreById(int id) {
@@ -73,10 +73,10 @@ public class GenreService {
 		genreRepo.save(genre);
 	}
 	
-	public List<BookDto> getBooks(int id) {
+	public Collection<BookDto> getBooks(int id) {
 		Genre genre = genreRepo.findById(id).get();
-		List<Book> books = genre.getBooks();
-		List<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toList());
+		Collection<Book> books = genre.getBooks();
+		Collection<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toSet());
 		return booksdtos;
 	}
 	
@@ -94,10 +94,10 @@ public class GenreService {
 		genreRepo.save(genre);
 	}
 	
-	public List<GenreDto> getSubGenres(int id) {
+	public Collection<GenreDto> getSubGenres(int id) {
 		Genre genre = genreRepo.findById(id).get();
-		List<Genre> subgenres = genre.getSubGenres();
-		List<GenreDto> subgenresdtos = subgenres.stream().map(s->GenreDtoConverter.toDto(s)).collect(Collectors.toList());
+		Collection<Genre> subgenres = genre.getSubGenres();
+		Collection<GenreDto> subgenresdtos = subgenres.stream().map(s->GenreDtoConverter.toDto(s)).collect(Collectors.toSet());
 		return subgenresdtos;
 	}
 	

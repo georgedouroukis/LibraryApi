@@ -1,7 +1,7 @@
 package com.example.library.businessLogicLayer.dtos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class GenreDto {
 
@@ -9,11 +9,11 @@ public class GenreDto {
 	private String genre;
 	
 	private Integer parentGenre;
-	private List<Integer> subGenres = new ArrayList<Integer>();
-	private List<Integer> books = new ArrayList<Integer>();
+	private Collection<Integer> subGenres = new HashSet<Integer>();
+	private Collection<Integer> books = new HashSet<Integer>();
 	
 	
-	public GenreDto(int id, String genre, Integer parentGenre, List<Integer> subGenres, List<Integer> books) {
+	public GenreDto(int id, String genre, Integer parentGenre, Collection<Integer> subGenres, Collection<Integer> books) {
 		super();
 		this.id = id;
 		this.genre = genre;
@@ -36,10 +36,10 @@ public class GenreDto {
 	public Integer getParentGenre() {
 		return parentGenre;
 	}
-	public List<Integer> getSubGenres() {
+	public Collection<Integer> getSubGenres() {
 		return subGenres;
 	}
-	public List<Integer> getBooks() {
+	public Collection<Integer> getBooks() {
 		return books;
 	}
 	

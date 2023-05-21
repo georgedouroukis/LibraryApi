@@ -17,8 +17,8 @@ public class BookDtoConverter {
 				b.getPageNumber(),
 				b.getPublicationDate(),
 				b.getPublisher().getId(),
-				b.getGenres().stream().map(g->g.getId()).collect(Collectors.toList()),
-				b.getAuthors().stream().map(a->a.getId()).collect(Collectors.toList()));
+				b.getGenres().stream().map(g->g.getId()).collect(Collectors.toSet()),
+				b.getAuthors().stream().map(a->a.getId()).collect(Collectors.toSet()));
 		
 		
 	}

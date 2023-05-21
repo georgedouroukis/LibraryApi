@@ -1,6 +1,7 @@
 package com.example.library.businessLogicLayer.services;
 
-import java.util.List;
+
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import com.example.library.domainLayer.repositories.BookRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-@Transactional
+
 public class AuthorService {
 	
 	@Autowired
@@ -27,11 +28,11 @@ public class AuthorService {
 	@Autowired
 	private BookRepository bookRepo;
 	
-	public List<AuthorDto> getAuthors(){
+	public Collection<AuthorDto> getAuthors(){
 		return authorRepo.findAll()
 				.stream()
 				.map(a->AuthorDtoConverter.toDto(a))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 		
 	}
 	
@@ -59,31 +60,37 @@ public class AuthorService {
 	}
 	
 	//mapped also by BookService
-	public void addBook(int authorId, int bookId) {
+	
+	public String addBook(int authorId, int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
-		author.getBooks().add(book);
+		boolean result = author.getBooks().add(book);
 		authorRepo.save(author);
+		return result ? "success": "failed";
 	}
 	
 	//mapped also by BookService
-	public void removeBook(int authorId, int bookId) {
+	@Transactional
+	public String removeBook(int authorId, int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
-		author.getBooks().removeIf(b->b.equals(book));
+		author.getBooks().remove(book);
 		authorRepo.save(author);
+		return "success";
+		
 	}
 	
-	public List<BookDto> getBooks(int id){
+	public Collection<BookDto> getBooks(int id){
 		Author author = authorRepo.findById(id).get();
-		List<Book> books = author.getBooks();
-		List<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toList());
+		Collection<Book> books = author.getBooks();
+		Collection<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toSet());
 		return booksdtos;
 	}
 
-	public void deleteAuthor(int id) {
+	public String deleteAuthor(int id) {
 		Author author = authorRepo.findById(id).get();
 		authorRepo.delete(author);
+		return "success";
 	}
 
 }

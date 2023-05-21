@@ -1,12 +1,11 @@
 package com.example.library.domainLayer.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.transaction.Transactional;
 
 
 @Entity(name="genre")
@@ -31,11 +29,11 @@ public class Genre {
 	private Genre parentGenre;
 	
 	@OneToMany(mappedBy = "parentGenre")
-	private List<Genre> subGenres = new ArrayList<Genre>();
+	private Collection<Genre> subGenres = new HashSet<Genre>();
 	
 	@JsonBackReference
 	@ManyToMany(mappedBy = "genres"/* , fetch = FetchType.EAGER */)
-	private List<Book> books = new ArrayList<Book>();
+	private Collection<Book> books = new HashSet<Book>();
 
 
 	public int getId() {
@@ -68,22 +66,22 @@ public class Genre {
 	}
 
 
-	public List<Genre> getSubGenres() {
+	public Collection<Genre> getSubGenres() {
 		return subGenres;
 	}
 
 
-	public void setSubGenres(List<Genre> subGenres) {
+	public void setSubGenres(Collection<Genre> subGenres) {
 		this.subGenres = subGenres;
 	}
 
 
-	public List<Book> getBooks() {
+	public Collection<Book> getBooks() {
 		return books;
 	}
 
 
-	public void setBooks(List<Book> books) {
+	public void setBooks(Collection<Book> books) {
 		this.books = books;
 	}
 

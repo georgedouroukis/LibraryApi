@@ -14,7 +14,7 @@ public class AuthorDtoConverter {
 				a.getFirstName(),
 				a.getLastName(),
 				a.getMiddleName(),
-				a.getBooks().stream().map(b->b.getId()).collect(Collectors.toList()));
+				a.getBooks().stream().map(b->b.getId()).collect(Collectors.toSet()));
 		
 		
 	}

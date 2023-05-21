@@ -1,7 +1,7 @@
 package com.example.library.businessLogicLayer.dtos;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class AuthorDto {
 	
@@ -10,10 +10,10 @@ public class AuthorDto {
 	private String lastName;
 	private String middleName;
 	
-	private List<Integer> books = new ArrayList<>();
+	private Collection<Integer> books = new HashSet<>();
 	
 	
-	public AuthorDto(int id, String firstName, String lastName, String middleName, List<Integer> books) {
+	public AuthorDto(int id, String firstName, String lastName, String middleName, Collection<Integer> books) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -45,7 +45,7 @@ public class AuthorDto {
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
-	public List<Integer> getBooks() {
+	public Collection<Integer> getBooks() {
 		return books;
 	}
 	

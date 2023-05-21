@@ -1,6 +1,7 @@
 package com.example.library.businessLogicLayer.services;
 
-import java.util.List;
+
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,11 @@ public class BookService {
 	@Autowired
 	private PublisherRepository publisherRepo;
 	
-	public List<BookDto> getBooks(){
+	public Collection<BookDto> getBooks(){
 		return bookRepo.findAll()
 				.stream()
 				.map(b->BookDtoConverter.toDto(b))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 		
 	}
 	
@@ -92,33 +93,35 @@ public class BookService {
 		bookRepo.save(book);
 	}
 	
-	public List<GenreDto> getGenres(int id) {
+	public Collection<GenreDto> getGenres(int id) {
 		Book book = bookRepo.findById(id).get();
-		List<Genre> genres = book.getGenres();
-		List<GenreDto> genresdtos = genres.stream().map(g->GenreDtoConverter.toDto(g)).collect(Collectors.toList());
+		Collection<Genre> genres = book.getGenres();
+		Collection<GenreDto> genresdtos = genres.stream().map(g->GenreDtoConverter.toDto(g)).collect(Collectors.toSet());
 		return genresdtos;
 	}
 	
 	//mapped also by AuthorService
-	public void addAuthor(int bookId, int authorId) {
+	public String addAuthor(int bookId, int authorId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
 		book.getAuthors().add(author);
 		bookRepo.save(book);
+		return "success2";
 	}
 	
 	//mapped also by AuthorService
-	public void removeAuthor(int bookId, int authorId) {
+	public String removeAuthor(int bookId, int authorId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
-		book.getAuthors().removeIf(a->a.equals(author));
+		boolean result = book.getAuthors().remove(author);
 		bookRepo.save(book);
+		return result ? "success":"failed";
 	}
 	
-	public List<AuthorDto> getAuthors(int bookId) {
+	public Collection<AuthorDto> getAuthors(int bookId) {
 		Book book = bookRepo.findById(bookId).get();
-		List<Author> authors = book.getAuthors();
-		List<AuthorDto> authorsdtos = authors.stream().map(a->AuthorDtoConverter.toDto(a)).collect(Collectors.toList());
+		Collection<Author> authors = book.getAuthors();
+		Collection<AuthorDto> authorsdtos = authors.stream().map(a->AuthorDtoConverter.toDto(a)).collect(Collectors.toSet());
 		return authorsdtos;
 	}
 	

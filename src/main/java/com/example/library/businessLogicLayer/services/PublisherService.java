@@ -1,6 +1,6 @@
 package com.example.library.businessLogicLayer.services;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,11 @@ public class PublisherService {
 	private PublisherRepository publisherRepo;
 	
 	
-	public List<PublisherDto> getPublishers(){
+	public Collection<PublisherDto> getPublishers(){
 		return publisherRepo.findAll()
 				.stream()
 				.map(p->PublisherDtoConverter.toDto(p))
-				.collect(Collectors.toList());
+				.collect(Collectors.toSet());
 	}
 	
 	public PublisherDto getPublisherById(int id) {
@@ -67,10 +67,10 @@ public class PublisherService {
 		publisherRepo.save(publisher);
 	}
 	
-	public List<BookDto> getBooks(int id) {
+	public Collection<BookDto> getBooks(int id) {
 		Publisher publisher = publisherRepo.findById(id).get();
-		List<Book> books = publisher.getBooks();
-		List<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toList());
+		Collection<Book> books = publisher.getBooks();
+		Collection<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toSet());
 		return booksdtos;
 	}
 	

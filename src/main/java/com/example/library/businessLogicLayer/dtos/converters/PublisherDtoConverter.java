@@ -16,7 +16,7 @@ public class PublisherDtoConverter {
 				p.getName(),
 				p.getPhone(),
 				p.getEmail(),
-				p.getBooks().stream().map(b->b.getId()).collect(Collectors.toList()));
+				p.getBooks().stream().map(b->b.getId()).collect(Collectors.toSet()));
 		
 		
 	}

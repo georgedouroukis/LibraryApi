@@ -1,13 +1,14 @@
 package com.example.library.domainLayer.models;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Collection;
+import java.util.HashSet;
+
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,7 +16,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.transaction.Transactional;
 
 
 @Entity(name="book")
@@ -47,7 +47,7 @@ public class Book {
 		name="book_genres",
 		joinColumns = @JoinColumn(name="book_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name="genre_id", referencedColumnName = "id"))
-	private List<Genre> genres = new ArrayList<Genre>();
+	private Collection<Genre> genres = new HashSet<Genre>();
 	
 	
 	@JsonManagedReference
@@ -56,7 +56,7 @@ public class Book {
 		name="book_authors",
 		joinColumns = @JoinColumn(name="book_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name="author_id", referencedColumnName = "id"))
-	private List<Author> authors = new ArrayList<Author>();
+	private Collection<Author> authors = new HashSet<Author>();
 
 
 	
@@ -115,22 +115,22 @@ public class Book {
 	}
 
 
-	public List<Genre> getGenres() {
+	public Collection<Genre> getGenres() {
 		return genres;
 	}
 
 
-	public void setGenres(List<Genre> genres) {
+	public void setGenres(Collection<Genre> genres) {
 		this.genres = genres;
 	}
 
 
-	public List<Author> getAuthors() {
+	public Collection<Author> getAuthors() {
 		return authors;
 	}
 
 
-	public void setAuthors(List<Author> authors) {
+	public void setAuthors(Collection<Author> authors) {
 		this.authors = authors;
 	}
 

@@ -1,14 +1,13 @@
 package com.example.library.domainLayer.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.transaction.Transactional;
 
 @Entity(name="publisher")
 public class Publisher {
@@ -25,7 +24,7 @@ public class Publisher {
 	
 	
 	@OneToMany(mappedBy="publisher")
-	private List<Book> books = new ArrayList<Book>();
+	private Collection<Book> books = new HashSet<Book>();
 
 
 	public int getId() {
@@ -60,11 +59,11 @@ public class Publisher {
 		this.email = email;
 	}
 
-	public List<Book> getBooks() {
+	public Collection<Book> getBooks() {
 		return books;
 	}
 
-	public void setBooks(List<Book> books) {
+	public void setBooks(Collection<Book> books) {
 		this.books = books;
 	}
 

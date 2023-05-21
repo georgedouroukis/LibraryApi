@@ -72,4 +72,20 @@ public class BookController {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
+	@PutMapping("/{bookId}/add/{authorId}")
+	public ResponseEntity<ResponseContainer<?>> authorAddBook(@PathVariable("authorId") Integer authorId,@PathVariable("bookId") Integer bookId) {
+		try {
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=bookService.addAuthor(bookId, authorId);}},HttpStatus.OK);
+		}
+		catch (NoSuchElementException e) {
+			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.NOT_FOUND);
+		}
+		catch (Exception e) {
+			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	
 }
