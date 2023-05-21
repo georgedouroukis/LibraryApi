@@ -1,6 +1,5 @@
 package com.example.library.businessLogicLayer.services;
 
-
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -14,26 +13,19 @@ import com.example.library.businessLogicLayer.dtos.converters.BookDtoConverter;
 import com.example.library.domainLayer.models.Author;
 import com.example.library.domainLayer.models.Book;
 import com.example.library.domainLayer.repositories.AuthorRepository;
-import com.example.library.domainLayer.repositories.BookRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
-
 public class AuthorService {
 	
 	@Autowired
 	private AuthorRepository authorRepo;
-	
-	@Autowired
-	private BookRepository bookRepo;
 	
 	public Collection<AuthorDto> getAuthors(){
 		return authorRepo.findAll()
 				.stream()
 				.map(a->AuthorDtoConverter.toDto(a))
 				.collect(Collectors.toSet());
-		
 	}
 	
 	public AuthorDto getAuthorById(int id) {
@@ -59,27 +51,6 @@ public class AuthorService {
 		
 	}
 	
-	//mapped also by BookService
-	
-	public String addBook(int authorId, int bookId) {
-		Book book = bookRepo.findById(bookId).get();
-		Author author = authorRepo.findById(authorId).get();
-		boolean result = author.getBooks().add(book);
-		authorRepo.save(author);
-		return result ? "success": "failed";
-	}
-	
-	//mapped also by BookService
-	@Transactional
-	public String removeBook(int authorId, int bookId) {
-		Book book = bookRepo.findById(bookId).get();
-		Author author = authorRepo.findById(authorId).get();
-		author.getBooks().remove(book);
-		authorRepo.save(author);
-		return "success";
-		
-	}
-	
 	public Collection<BookDto> getBooks(int id){
 		Author author = authorRepo.findById(id).get();
 		Collection<Book> books = author.getBooks();
@@ -91,6 +62,7 @@ public class AuthorService {
 		Author author = authorRepo.findById(id).get();
 		authorRepo.delete(author);
 		return "success";
+		// errors handled in controllers
 	}
 
 }

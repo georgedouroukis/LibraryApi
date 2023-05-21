@@ -77,20 +77,22 @@ public class BookService {
 	 * addOrReplacePublisher, removePublisher, getPublisher
 	 * */
 	
-	//mapped also by GenreService
-	public void addGenre(int bookId, int genreId) {
+	
+	public String addGenre(int bookId, int genreId) {
 		Book book = bookRepo.findById(bookId).get();
 		Genre genre = genreRepo.findById(genreId).get();
-		book.getGenres().add(genre);
+		boolean result = book.getGenres().add(genre);
 		bookRepo.save(book);
+		return result?"success":"failed";
 	}
 	
-	//mapped also by GenreService
-	public void removeGenre(int bookId, int genreId) {
+	
+	public String removeGenre(int bookId, int genreId) {
 		Book book = bookRepo.findById(bookId).get();
 		Genre genre = genreRepo.findById(genreId).get();
-		book.getGenres().removeIf(g->g.equals(genre));
+		boolean result = book.getGenres().remove(genre);
 		bookRepo.save(book);
+		return result?"success":"failed";
 	}
 	
 	public Collection<GenreDto> getGenres(int id) {
@@ -100,16 +102,14 @@ public class BookService {
 		return genresdtos;
 	}
 	
-	//mapped also by AuthorService
 	public String addAuthor(int bookId, int authorId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
-		book.getAuthors().add(author);
+		boolean result = book.getAuthors().add(author);
 		bookRepo.save(book);
-		return "success2";
+		return result?"success":"failed";
 	}
 	
-	//mapped also by AuthorService
 	public String removeAuthor(int bookId, int authorId) {
 		Book book = bookRepo.findById(bookId).get();
 		Author author = authorRepo.findById(authorId).get();
@@ -125,17 +125,19 @@ public class BookService {
 		return authorsdtos;
 	}
 	
-	public void addOrReplacePublisher(int bookId, int publisherId) {
+	public String addOrReplacePublisher(int bookId, int publisherId) {
 		Book book = bookRepo.findById(bookId).get();
 		Publisher publisher = publisherRepo.findById(publisherId).get();
 		book.setPublisher(publisher);
 		bookRepo.save(book);
+		return "success";
 	}
 	
-	public void removePublisher(int bookId) {
+	public String removePublisher(int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		book.setPublisher(null);
 		bookRepo.save(book);
+		return "success";
 		
 	}
 	
@@ -146,9 +148,10 @@ public class BookService {
 		return dto;
 	}
 	
-	public void deleteBook(int bookId) {
+	public String deleteBook(int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		bookRepo.delete(book);
+		return "success";
 	}
 
 }

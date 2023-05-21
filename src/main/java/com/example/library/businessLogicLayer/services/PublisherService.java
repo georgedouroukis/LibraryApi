@@ -12,14 +12,10 @@ import com.example.library.businessLogicLayer.dtos.converters.BookDtoConverter;
 import com.example.library.businessLogicLayer.dtos.converters.PublisherDtoConverter;
 import com.example.library.domainLayer.models.Book;
 import com.example.library.domainLayer.models.Publisher;
-import com.example.library.domainLayer.repositories.BookRepository;
 import com.example.library.domainLayer.repositories.PublisherRepository;
 
 @Service
 public class PublisherService {
-	
-	@Autowired
-	private BookRepository bookRepo;
 	
 	@Autowired
 	private PublisherRepository publisherRepo;
@@ -53,20 +49,6 @@ public class PublisherService {
 		return publisher.getId();
 	}
 	
-	public void addBook(int publisherId, int bookId) {
-		Book book = bookRepo.findById(bookId).get();
-		Publisher publisher = publisherRepo.findById(publisherId).get();
-		publisher.getBooks().add(book);
-		publisherRepo.save(publisher);
-	}
-	
-	public void removeBook(int publisherId, int bookId) {
-		Book book = bookRepo.findById(bookId).get();
-		Publisher publisher = publisherRepo.findById(publisherId).get();
-		publisher.getBooks().removeIf(b->b.equals(book));
-		publisherRepo.save(publisher);
-	}
-	
 	public Collection<BookDto> getBooks(int id) {
 		Publisher publisher = publisherRepo.findById(id).get();
 		Collection<Book> books = publisher.getBooks();
@@ -74,10 +56,10 @@ public class PublisherService {
 		return booksdtos;
 	}
 	
-	public void deletePublisher(int publisherId) {
+	public String deletePublisher(int publisherId) {
 		Publisher publisher = publisherRepo.findById(publisherId).get();
 		publisherRepo.delete(publisher);
+		return "success";
 	}
-
 
 }

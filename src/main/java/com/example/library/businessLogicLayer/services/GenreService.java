@@ -12,14 +12,10 @@ import com.example.library.businessLogicLayer.dtos.converters.BookDtoConverter;
 import com.example.library.businessLogicLayer.dtos.converters.GenreDtoConverter;
 import com.example.library.domainLayer.models.Book;
 import com.example.library.domainLayer.models.Genre;
-import com.example.library.domainLayer.repositories.BookRepository;
 import com.example.library.domainLayer.repositories.GenreRepository;
 
 @Service
 public class GenreService {
-	
-	@Autowired
-	private BookRepository bookRepo;
 	
 	@Autowired
 	private GenreRepository genreRepo;
@@ -57,22 +53,6 @@ public class GenreService {
 	 * addOrReplaceParentGenre, removeParentGenre, getParentGenre
 	 * */
 	
-	//mapped also by BookService
-	public void addBook(int genreId, int bookId) {
-		Book book = bookRepo.findById(bookId).get();
-		Genre genre = genreRepo.findById(genreId).get();
-		genre.getBooks().add(book);
-		genreRepo.save(genre);
-	}
-	
-	//mapped also by BookService
-	public void removeBook(int genreId, int bookId) {
-		Book book = bookRepo.findById(bookId).get();
-		Genre genre = genreRepo.findById(genreId).get();
-		genre.getBooks().removeIf(b->b.equals(book));
-		genreRepo.save(genre);
-	}
-	
 	public Collection<BookDto> getBooks(int id) {
 		Genre genre = genreRepo.findById(id).get();
 		Collection<Book> books = genre.getBooks();
@@ -80,18 +60,20 @@ public class GenreService {
 		return booksdtos;
 	}
 	
-	public void addSubGenre(int genreId, int subId) {
+	public String addSubGenre(int genreId, int subId) {
 		Genre genre = genreRepo.findById(genreId).get();
 		Genre sub = genreRepo.findById(subId).get();		
-		genre.getSubGenres().add(sub);
+		boolean result = genre.getSubGenres().add(sub);
 		genreRepo.save(genre);
+		return result?"success":"failed";
 	}
 	
-	public void removeSubGenre(int genreId, int subId) {
+	public String removeSubGenre(int genreId, int subId) {
 		Genre genre = genreRepo.findById(genreId).get();
 		Genre sub = genreRepo.findById(subId).get();		
-		genre.getSubGenres().removeIf(s->s.equals(sub));
+		boolean result = genre.getSubGenres().remove(sub);
 		genreRepo.save(genre);
+		return result?"success":"failed";
 	}
 	
 	public Collection<GenreDto> getSubGenres(int id) {
@@ -101,17 +83,19 @@ public class GenreService {
 		return subgenresdtos;
 	}
 	
-	public void addOrReplaceParentGenre(int genreId, int parentId) {
+	public String addOrReplaceParentGenre(int genreId, int parentId) {
 		Genre genre = genreRepo.findById(genreId).get();
 		Genre parent = genreRepo.findById(parentId).get();	
 		genre.setParentGenre(parent);
 		genreRepo.save(genre);
+		return "success";
 	}
 	
-	public void removeParentGenre(int genreId) {
+	public String removeParentGenre(int genreId) {
 		Genre genre = genreRepo.findById(genreId).get();
 		genre.setParentGenre(null);
 		genreRepo.save(genre);
+		return "success";
 	}
 	
 	public GenreDto getParentGenre(int genreId) {
@@ -121,9 +105,10 @@ public class GenreService {
 		return dto;
 	}
 	
-	public void deleteGenre(int genreId) {
+	public String deleteGenre(int genreId) {
 		Genre genre = genreRepo.findById(genreId).get();
 		genreRepo.delete(genre);
+		return "success";
 	}
 
 }
