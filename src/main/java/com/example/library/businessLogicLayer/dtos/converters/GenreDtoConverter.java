@@ -14,7 +14,7 @@ public class GenreDtoConverter {
 		return new GenreDto(
 				g.getId(),
 				g.getGenre(),
-				g.getParentGenre().getId(),
+				(g.getParentGenre()==null)?null:g.getParentGenre().getId(),
 				g.getSubGenres().stream().map(genre->genre.getId()).collect(Collectors.toSet()),
 				g.getBooks().stream().map(b->b.getId()).collect(Collectors.toSet()));
 		
