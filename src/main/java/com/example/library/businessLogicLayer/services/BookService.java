@@ -69,6 +69,7 @@ public class BookService {
 		book.setPageNumber(dto.getPageNumber());
 		book.setPublicationDate(dto.getPublicationDate());
 		book.setDescription(dto.getDescription());
+		book.setImageUrl(dto.getImageUrl());
 		bookRepo.save(book);
 		return book.getId();
 	}

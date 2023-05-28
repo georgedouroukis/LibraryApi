@@ -37,6 +37,8 @@ public class Book {
 	
 	@Column(columnDefinition = "TEXT")
 	private String description;
+	
+	private String imageUrl;
 
 	@ManyToOne
 	@JoinColumn(name="publisher_id")
@@ -114,6 +116,16 @@ public class Book {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 

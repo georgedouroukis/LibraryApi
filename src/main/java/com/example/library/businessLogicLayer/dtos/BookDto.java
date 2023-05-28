@@ -11,13 +11,14 @@ public class BookDto {
 	private int pageNumber;
 	private String publicationDate;
 	private String description;
+	private String imageUrl;
 	
 	private Integer publisher;
 	private Collection<Integer> genres = new HashSet<Integer>();
 	private Collection<Integer> authors = new HashSet<Integer>();
 	
 	
-	public BookDto(int id, String isbn, String title, int pageNumber, String publicationDate, String description, Integer publisher,
+	public BookDto(int id, String isbn, String title, int pageNumber, String publicationDate, String description, String imageUrl, Integer publisher,
 			Collection<Integer> genres, Collection<Integer> authors) {
 		super();
 		this.id = id;
@@ -26,6 +27,7 @@ public class BookDto {
 		this.pageNumber = pageNumber;
 		this.publicationDate = publicationDate;
 		this.description = description;
+		this.imageUrl = imageUrl;
 		this.publisher = publisher;
 		this.genres = genres;
 		this.authors = authors;
@@ -65,6 +67,12 @@ public class BookDto {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	public Integer getPublisher() {
 		return publisher;
