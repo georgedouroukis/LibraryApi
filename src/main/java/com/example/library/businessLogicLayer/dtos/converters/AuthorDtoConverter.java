@@ -14,6 +14,7 @@ public class AuthorDtoConverter {
 				a.getFirstName(),
 				a.getLastName(),
 				a.getMiddleName(),
+				a.getDescription(),
 				a.getBooks().stream().map(b->b.getId()).collect(Collectors.toSet()));
 		
 		
@@ -25,6 +26,7 @@ public class AuthorDtoConverter {
 		author.setFirstName(dto.getFirstName());
 		author.setLastName(dto.getLastName());
 		author.setMiddleName(dto.getMiddleName());
+		author.setDescription(dto.getDescription());
 		
 		return author;
 	}

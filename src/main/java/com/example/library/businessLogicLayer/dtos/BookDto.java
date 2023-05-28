@@ -10,13 +10,14 @@ public class BookDto {
 	private String title;
 	private int pageNumber;
 	private String publicationDate;
+	private String description;
 	
 	private Integer publisher;
 	private Collection<Integer> genres = new HashSet<Integer>();
 	private Collection<Integer> authors = new HashSet<Integer>();
 	
 	
-	public BookDto(int id, String isbn, String title, int pageNumber, String publicationDate, Integer publisher,
+	public BookDto(int id, String isbn, String title, int pageNumber, String publicationDate, String description, Integer publisher,
 			Collection<Integer> genres, Collection<Integer> authors) {
 		super();
 		this.id = id;
@@ -24,6 +25,7 @@ public class BookDto {
 		this.title = title;
 		this.pageNumber = pageNumber;
 		this.publicationDate = publicationDate;
+		this.description = description;
 		this.publisher = publisher;
 		this.genres = genres;
 		this.authors = authors;
@@ -57,6 +59,12 @@ public class BookDto {
 	}
 	public void setPublicationDate(String publicationDate) {
 		this.publicationDate = publicationDate;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public Integer getPublisher() {
 		return publisher;

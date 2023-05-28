@@ -28,6 +28,9 @@ public class Author {
 	@Column(name = "middle_name")
 	private String middleName;
 	
+	@Column(columnDefinition = "TEXT")
+	private String description;
+	
 	
 	@ManyToMany(mappedBy = "authors"/* , fetch = FetchType.EAGER */)
 	private Collection<Book> books = new HashSet<Book>();
@@ -72,15 +75,26 @@ public class Author {
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
+	
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 
 	public Collection<Book> getBooks() {
 		return books;
 	}
 
-
+	
 	public void setBooks(Collection<Book> books) {
 		this.books = books;
 	}
+	
 
 }

@@ -35,6 +35,8 @@ public class Book {
 	@Column(name="publication_date")
 	private String publicationDate;
 	
+	@Column(columnDefinition = "TEXT")
+	private String description;
 
 	@ManyToOne
 	@JoinColumn(name="publisher_id")
@@ -102,6 +104,16 @@ public class Book {
 
 	public void setPublicationDate(String publicationDate) {
 		this.publicationDate = publicationDate;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 

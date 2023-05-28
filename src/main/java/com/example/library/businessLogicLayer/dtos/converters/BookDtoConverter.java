@@ -16,6 +16,7 @@ public class BookDtoConverter {
 				b.getTitle(),
 				b.getPageNumber(),
 				b.getPublicationDate(),
+				b.getDescription(),
 				b.getPublisher().getId(),
 				b.getGenres().stream().map(g->g.getId()).collect(Collectors.toSet()),
 				b.getAuthors().stream().map(a->a.getId()).collect(Collectors.toSet()));
@@ -30,6 +31,7 @@ public class BookDtoConverter {
 		book.setTitle(dto.getTitle());
 		book.setPageNumber(dto.getPageNumber());
 		book.setPublicationDate(dto.getPublicationDate());
+		book.setDescription(dto.getDescription());
 		
 		
 		return book;

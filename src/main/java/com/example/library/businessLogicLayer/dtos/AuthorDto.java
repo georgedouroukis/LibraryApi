@@ -9,16 +9,18 @@ public class AuthorDto {
 	private String firstName;
 	private String lastName;
 	private String middleName;
+	private String description;
 	
 	private Collection<Integer> books = new HashSet<>();
 	
 	
-	public AuthorDto(int id, String firstName, String lastName, String middleName, Collection<Integer> books) {
+	public AuthorDto(int id, String firstName, String lastName, String middleName, String description, Collection<Integer> books) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.middleName = middleName;
+		this.description = description;
 		this.books = books;
 	}
 	public int getId() {
@@ -47,6 +49,12 @@ public class AuthorDto {
 	}
 	public Collection<Integer> getBooks() {
 		return books;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

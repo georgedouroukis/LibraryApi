@@ -46,6 +46,7 @@ public class AuthorService {
 		author.setFirstName(dto.getFirstName());
 		author.setLastName(dto.getLastName());
 		author.setMiddleName(dto.getMiddleName());
+		author.setDescription(dto.getDescription());
 		authorRepo.save(author);
 		return author.getId();
 		
