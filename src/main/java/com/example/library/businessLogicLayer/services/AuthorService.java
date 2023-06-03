@@ -22,6 +22,9 @@ public class AuthorService {
 	private AuthorRepository authorRepo;
 	
 	@Autowired
+	private BookService bookService;
+	
+	@Autowired
 	private BookDtoConverter bookDtoConverter;
 	
 	@Autowired
@@ -43,6 +46,11 @@ public class AuthorService {
 	public int createAuthor(AuthorDto dto) {
 		Author newAuthor = authorDtoConverter.toEntity(dto);
 		authorRepo.save(newAuthor);
+		
+		//because mapped by Book::authors,  the opposite works fine
+		for (Book book : newAuthor.getBooks()) {
+			bookService.addAuthor(book.getId(), newAuthor.getId());
+		}
 		return newAuthor.getId();
 		
 	}
@@ -54,8 +62,17 @@ public class AuthorService {
 		author.setLastName(dto.getLastName());
 		author.setMiddleName(dto.getMiddleName());
 		author.setDescription(dto.getDescription());
-		author.setBooks(temp.getBooks());
 		authorRepo.save(author);
+		
+		//because mapped by Book::authors,  the opposite works fine
+		
+		for (Book book : author.getBooks()) {
+			bookService.removeAuthor(book.getId(), author.getId());
+		}
+		for (Book book : temp.getBooks()) {
+			bookService.addAuthor(book.getId(), author.getId());
+		}
+
 		return author.getId();
 		
 	}

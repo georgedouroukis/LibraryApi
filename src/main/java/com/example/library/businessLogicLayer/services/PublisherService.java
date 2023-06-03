@@ -21,6 +21,9 @@ public class PublisherService {
 	private PublisherRepository publisherRepo;
 	
 	@Autowired
+	private BookService bookService;
+	
+	@Autowired
 	private PublisherDtoConverter publisherDtoConverter;
 	
 	@Autowired
@@ -43,6 +46,11 @@ public class PublisherService {
 	public int createPublisher(PublisherDto dto) {
 		Publisher newPublisher = publisherDtoConverter.toEntity(dto);
 		publisherRepo.save(newPublisher);
+		
+		//because mapped by Book::publisher,  the opposite works fine
+		for(Book book : newPublisher.getBooks()) {
+			bookService.addOrReplacePublisher(book.getId(), newPublisher.getId());
+		}
 		return newPublisher.getId();
 	}
 	
@@ -52,8 +60,16 @@ public class PublisherService {
 		publisher.setName(dto.getName());
 		publisher.setPhone(dto.getPhone());
 		publisher.setEmail(dto.getEmail());
-		publisher.setBooks(temp.getBooks());
 		publisherRepo.save(publisher);
+		
+		//because mapped by Book::publisher,  the opposite works fine
+		for(Book book : publisher.getBooks()) {
+			bookService.removePublisher(book.getId());
+		}
+		for(Book book : temp.getBooks()) {
+			bookService.addOrReplacePublisher(book.getId(), publisher.getId());
+		}
+
 		return publisher.getId();
 	}
 	

@@ -21,6 +21,9 @@ public class GenreService {
 	private GenreRepository genreRepo;
 	
 	@Autowired
+	private BookService bookService;
+	
+	@Autowired
 	private GenreDtoConverter genreDtoConverter;
 	
 	@Autowired
@@ -43,6 +46,18 @@ public class GenreService {
 	public int createGenre(GenreDto dto) {
 		Genre newGenre = genreDtoConverter.toEntity(dto);
 		genreRepo.save(newGenre);
+		
+		//no need for removing since it is a new entry
+		//because mapped by Genre::parentGenre,  the opposite works fine
+		for (Genre genre : newGenre.getSubGenres()) {
+			addOrReplaceParentGenre(genre.getId(), newGenre.getId());
+		}
+		
+		//because mapped by Book::genres,  the opposite works fine
+		for (Book book : newGenre.getBooks()) {
+			bookService.addGenre(book.getId(), newGenre.getId());
+		}
+		
 		return newGenre.getId();
 	}
 	
@@ -51,9 +66,21 @@ public class GenreService {
 		Genre temp = genreDtoConverter.toEntity(dto);
 		genre.setGenre(dto.getGenre());
 		genre.setParentGenre(temp.getParentGenre());
-		genre.setSubGenres(temp.getSubGenres());
-		genre.setBooks(temp.getBooks());
 		genreRepo.save(genre);
+		
+		//because mapped by Genre::parentGenre,  the opposite works fine
+		genre.getSubGenres().forEach(s->removeParentGenre(s.getId()));
+		temp.getSubGenres().forEach(s->addOrReplaceParentGenre(s.getId(), genre.getId()));
+		
+		//because mapped by Book::genres,  the opposite works fine
+		
+		for (Book book : genre.getBooks()) {
+			bookService.removeGenre(book.getId(), genre.getId());
+		}
+		for (Book book : temp.getBooks()) {
+			bookService.addGenre(book.getId(), genre.getId());
+		}
+	
 		return genre.getId();
 	}
 	
