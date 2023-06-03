@@ -20,29 +20,39 @@ public class GenreService {
 	@Autowired
 	private GenreRepository genreRepo;
 	
+	@Autowired
+	private GenreDtoConverter genreDtoConverter;
+	
+	@Autowired
+	private BookDtoConverter bookDtoConverter;
+	
 	
 	public Collection<GenreDto> getGenres(){
 		 return genreRepo.findAll()
 				.stream()
-				.map(g->GenreDtoConverter.toDto(g))
+				.map(g->genreDtoConverter.toDto(g))
 				.collect(Collectors.toSet());
 	}
 	
 	public GenreDto getGenreById(int id) {
-		GenreDto genre = GenreDtoConverter.toDto(
+		GenreDto genre = genreDtoConverter.toDto(
 				genreRepo.findById(id).get());
 		return genre;
 	}
 	
 	public int createGenre(GenreDto dto) {
-		Genre newGenre = GenreDtoConverter.toEntity(dto);
+		Genre newGenre = genreDtoConverter.toEntity(dto);
 		genreRepo.save(newGenre);
 		return newGenre.getId();
 	}
 	
 	public int updateGenre(GenreDto dto) {
 		Genre genre = genreRepo.findById(dto.getId()).get();
+		Genre temp = genreDtoConverter.toEntity(dto);
 		genre.setGenre(dto.getGenre());
+		genre.setParentGenre(temp.getParentGenre());
+		genre.setSubGenres(temp.getSubGenres());
+		genre.setBooks(temp.getBooks());
 		genreRepo.save(genre);
 		return genre.getId();
 	}
@@ -56,7 +66,7 @@ public class GenreService {
 	public Collection<BookDto> getBooks(int id) {
 		Genre genre = genreRepo.findById(id).get();
 		Collection<Book> books = genre.getBooks();
-		Collection<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toSet());
+		Collection<BookDto> booksdtos = books.stream().map(b->bookDtoConverter.toDto(b)).collect(Collectors.toSet());
 		return booksdtos;
 	}
 	
@@ -79,7 +89,7 @@ public class GenreService {
 	public Collection<GenreDto> getSubGenres(int id) {
 		Genre genre = genreRepo.findById(id).get();
 		Collection<Genre> subgenres = genre.getSubGenres();
-		Collection<GenreDto> subgenresdtos = subgenres.stream().map(s->GenreDtoConverter.toDto(s)).collect(Collectors.toSet());
+		Collection<GenreDto> subgenresdtos = subgenres.stream().map(s->genreDtoConverter.toDto(s)).collect(Collectors.toSet());
 		return subgenresdtos;
 	}
 	
@@ -101,7 +111,7 @@ public class GenreService {
 	public GenreDto getParentGenre(int genreId) {
 		Genre genre = genreRepo.findById(genreId).get();
 		Genre parent = genre.getParentGenre();
-		GenreDto dto = GenreDtoConverter.toDto(parent);
+		GenreDto dto = genreDtoConverter.toDto(parent);
 		return dto;
 	}
 	

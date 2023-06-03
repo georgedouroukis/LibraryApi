@@ -20,31 +20,39 @@ public class PublisherService {
 	@Autowired
 	private PublisherRepository publisherRepo;
 	
+	@Autowired
+	private PublisherDtoConverter publisherDtoConverter;
+	
+	@Autowired
+	private BookDtoConverter bookDtoConverter;
+	
 	
 	public Collection<PublisherDto> getPublishers(){
 		return publisherRepo.findAll()
 				.stream()
-				.map(p->PublisherDtoConverter.toDto(p))
+				.map(p->publisherDtoConverter.toDto(p))
 				.collect(Collectors.toSet());
 	}
 	
 	public PublisherDto getPublisherById(int id) {
-		PublisherDto publisher = PublisherDtoConverter.toDto(
+		PublisherDto publisher = publisherDtoConverter.toDto(
 				publisherRepo.findById(id).get());
 		return publisher;
 	}
 	
 	public int createPublisher(PublisherDto dto) {
-		Publisher newPublisher = PublisherDtoConverter.toEntity(dto);
+		Publisher newPublisher = publisherDtoConverter.toEntity(dto);
 		publisherRepo.save(newPublisher);
 		return newPublisher.getId();
 	}
 	
 	public int updatePublisher(PublisherDto dto) {
 		Publisher publisher = publisherRepo.findById(dto.getId()).get();
+		Publisher temp = publisherDtoConverter.toEntity(dto);
 		publisher.setName(dto.getName());
 		publisher.setPhone(dto.getPhone());
 		publisher.setEmail(dto.getEmail());
+		publisher.setBooks(temp.getBooks());
 		publisherRepo.save(publisher);
 		return publisher.getId();
 	}
@@ -52,7 +60,7 @@ public class PublisherService {
 	public Collection<BookDto> getBooks(int id) {
 		Publisher publisher = publisherRepo.findById(id).get();
 		Collection<Book> books = publisher.getBooks();
-		Collection<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toSet());
+		Collection<BookDto> booksdtos = books.stream().map(b->bookDtoConverter.toDto(b)).collect(Collectors.toSet());
 		return booksdtos;
 	}
 	

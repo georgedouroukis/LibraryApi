@@ -69,7 +69,7 @@ public class PublisherController {
 	public ResponseEntity<ResponseContainer<?>> updatePublisher(@RequestBody PublisherDto dto) {
 
 		try {
-			return new ResponseEntity<>(new ResponseContainer<>() {{data=publisherService.createPublisher(dto);}},HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseContainer<>() {{data=publisherService.updatePublisher(dto);}},HttpStatus.OK);
 		}
 		catch (NoSuchElementException e) {
 			return new ResponseEntity<>(new ResponseContainer<>() {{error=e.toString();}},HttpStatus.NOT_FOUND);

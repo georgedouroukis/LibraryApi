@@ -40,23 +40,35 @@ public class BookService {
 	@Autowired
 	private PublisherRepository publisherRepo;
 	
+	@Autowired
+	private BookDtoConverter bookDtoConverter;
+	
+	@Autowired
+	private GenreDtoConverter genreDtoConverter;
+	
+	@Autowired
+	private AuthorDtoConverter authorDtoConverter;
+	
+	@Autowired
+	private PublisherDtoConverter publisherDtoConverter;
+	
 	public Collection<BookDto> getBooks(){
 		return bookRepo.findAll()
 				.stream()
-				.map(b->BookDtoConverter.toDto(b))
+				.map(b->bookDtoConverter.toDto(b))
 				.collect(Collectors.toSet());
 		
 	}
 	
 	public BookDto getBookById(int id) {
-		BookDto book = BookDtoConverter.toDto(
+		BookDto book = bookDtoConverter.toDto(
 				bookRepo.findById(id).get());
 		return book;
 		
 	}
 	
 	public int createBook(BookDto dto) {
-		Book newBook = BookDtoConverter.toEntity(dto);
+		Book newBook = bookDtoConverter.toEntity(dto);
 		bookRepo.save(newBook);
 		return newBook.getId();
 		
@@ -64,12 +76,16 @@ public class BookService {
 	
 	public int updateBook(BookDto dto) {
 		Book book = bookRepo.findById(dto.getId()).get();
+		Book temp = bookDtoConverter.toEntity(dto);
 		book.setIsbn(dto.getIsbn());
 		book.setTitle(dto.getTitle());
 		book.setPageNumber(dto.getPageNumber());
 		book.setPublicationDate(dto.getPublicationDate());
 		book.setDescription(dto.getDescription());
 		book.setImageUrl(dto.getImageUrl());
+		book.setPublisher(temp.getPublisher());
+		book.setAuthors(temp.getAuthors());
+		book.setGenres(temp.getGenres());
 		bookRepo.save(book);
 		return book.getId();
 	}
@@ -100,7 +116,7 @@ public class BookService {
 	public Collection<GenreDto> getGenres(int id) {
 		Book book = bookRepo.findById(id).get();
 		Collection<Genre> genres = book.getGenres();
-		Collection<GenreDto> genresdtos = genres.stream().map(g->GenreDtoConverter.toDto(g)).collect(Collectors.toSet());
+		Collection<GenreDto> genresdtos = genres.stream().map(g->genreDtoConverter.toDto(g)).collect(Collectors.toSet());
 		return genresdtos;
 	}
 	
@@ -123,7 +139,7 @@ public class BookService {
 	public Collection<AuthorDto> getAuthors(int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		Collection<Author> authors = book.getAuthors();
-		Collection<AuthorDto> authorsdtos = authors.stream().map(a->AuthorDtoConverter.toDto(a)).collect(Collectors.toSet());
+		Collection<AuthorDto> authorsdtos = authors.stream().map(a->authorDtoConverter.toDto(a)).collect(Collectors.toSet());
 		return authorsdtos;
 	}
 	
@@ -146,7 +162,7 @@ public class BookService {
 	public PublisherDto getPublisher(int bookId) {
 		Book book = bookRepo.findById(bookId).get();
 		Publisher publisher = book.getPublisher();
-		PublisherDto dto = PublisherDtoConverter.toDto(publisher);
+		PublisherDto dto = publisherDtoConverter.toDto(publisher);
 		return dto;
 	}
 	

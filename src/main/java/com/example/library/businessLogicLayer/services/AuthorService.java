@@ -21,21 +21,27 @@ public class AuthorService {
 	@Autowired
 	private AuthorRepository authorRepo;
 	
+	@Autowired
+	private BookDtoConverter bookDtoConverter;
+	
+	@Autowired
+	private AuthorDtoConverter authorDtoConverter;
+	
 	public Collection<AuthorDto> getAuthors(){
 		return authorRepo.findAll()
 				.stream()
-				.map(a->AuthorDtoConverter.toDto(a))
+				.map(a->authorDtoConverter.toDto(a))
 				.collect(Collectors.toSet());
 	}
 	
 	public AuthorDto getAuthorById(int id) {
-		AuthorDto author = AuthorDtoConverter.toDto(
+		AuthorDto author = authorDtoConverter.toDto(
 				authorRepo.findById(id).get()) ;
 		return author;
 	}
 	
 	public int createAuthor(AuthorDto dto) {
-		Author newAuthor = AuthorDtoConverter.toEntity(dto);
+		Author newAuthor = authorDtoConverter.toEntity(dto);
 		authorRepo.save(newAuthor);
 		return newAuthor.getId();
 		
@@ -43,10 +49,12 @@ public class AuthorService {
 	
 	public int updateAuthor(AuthorDto dto) {
 		Author author = authorRepo.findById(dto.getId()).get();
+		Author temp = authorDtoConverter.toEntity(dto);
 		author.setFirstName(dto.getFirstName());
 		author.setLastName(dto.getLastName());
 		author.setMiddleName(dto.getMiddleName());
 		author.setDescription(dto.getDescription());
+		author.setBooks(temp.getBooks());
 		authorRepo.save(author);
 		return author.getId();
 		
@@ -55,7 +63,7 @@ public class AuthorService {
 	public Collection<BookDto> getBooks(int id){
 		Author author = authorRepo.findById(id).get();
 		Collection<Book> books = author.getBooks();
-		Collection<BookDto> booksdtos = books.stream().map(b->BookDtoConverter.toDto(b)).collect(Collectors.toSet());
+		Collection<BookDto> booksdtos = books.stream().map(b->bookDtoConverter.toDto(b)).collect(Collectors.toSet());
 		return booksdtos;
 	}
 
