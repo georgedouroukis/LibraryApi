@@ -37,7 +37,8 @@ public class GenreDtoConverter {
 
 		Genre genre = new Genre();
 		genre.setGenre(dto.getGenre());
-		genre.setParentGenre(genreRepo.findById(dto.getParentGenre()).get());
+		if (dto.getParentGenre()!=null)
+			genre.setParentGenre(genreRepo.findById(dto.getParentGenre()).get());
 		Set<Genre> subGenres = dto.getSubGenres().stream().map(subId->genreRepo.findById(subId).get()).collect(Collectors.toSet());
 		genre.setSubGenres(subGenres);
 		Set<Book> books = dto.getBooks().stream().map(bookId->bookRepo.findById(bookId).get()).collect(Collectors.toSet());

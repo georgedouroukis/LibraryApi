@@ -54,7 +54,8 @@ public class BookDtoConverter {
 		book.setPublicationDate(dto.getPublicationDate());
 		book.setDescription(dto.getDescription());
 		book.setImageUrl(dto.getImageUrl());
-		book.setPublisher(publisherRepo.findById(dto.getPublisher()).get());
+		if(dto.getPublisher()!=null)
+			book.setPublisher(publisherRepo.findById(dto.getPublisher()).get());
 		Set<Author> authors = dto.getAuthors().stream().map(authorId-> authorRepo.findById(authorId).get()).collect(Collectors.toSet());
 		book.setAuthors(authors);
 		Set<Genre> genres = dto.getGenres().stream().map(genreId-> genreRepo.findById(genreId).get()).collect(Collectors.toSet());
